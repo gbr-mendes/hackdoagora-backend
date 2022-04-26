@@ -6,4 +6,4 @@ app.get("/", (req, resp)=> {
     resp.json({success: "Application deployed"})
 })
 
-app.listen(process.env.PORT || port, ()=> `Server listining at port ${port}`)
+app.listen(process.env.PORT || port, ()=> console.log(`Server listining at port ${port}...`))
