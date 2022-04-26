@@ -5,11 +5,11 @@ controller.createUser = async (req, resp) =>{
 }
 
 controller.loginUser = async (req, resp) => {
-    resp.status(201).json({token: "User token"})
+    resp.status(200).json({token: "User token"})
 }
 
 controller.logoutUser = async (req, resp) => {
-    resp.status(201).json({success: "User logged out"})
+    resp.status(200).json({success: "User logged out"})
 }
 
 module.exports = controller
