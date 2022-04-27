@@ -6,21 +6,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    email: {
+    type: {
         type: String,
-        unique: true,
         required: true,
-        lowercase: true,
     },
-    password: {
+    description: {
         type: String,
-        required: true,
-        select: false,
     },
-    passwordResetToken: {
-        type: String,
+    ecoPonto: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'EcoPonto',
         required: true,
-        select: false,
     },
     createdAt: {
         type: Date,
@@ -36,4 +32,4 @@ userSchema.pre("save", async function(next){
     next()
 })
 
-module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.model("Items", userSchema)
