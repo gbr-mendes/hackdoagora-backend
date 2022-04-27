@@ -6,6 +6,7 @@ require('dotenv').config()
 
 // dependencies import
 const bodyParser = require("body-parser")
+const cors = require("cors")
 const cloudinary = require("./utils/cloudinary")
 const upload = require("./utils/multer")
 
@@ -14,6 +15,7 @@ const authRoutes = require("./routes/auth")
 
 // general middlewares
 app.use(bodyParser.json())
+app.use(cors())
 
 // test routes
 app.get("/", (req, resp)=> { // route to test deploye
