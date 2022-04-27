@@ -2,7 +2,25 @@ const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 
 const userSchema = new mongoose.Schema({
-    // need to define the fields...
+    name: {
+        type: String,
+        require: true,
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true,
+        lowercase: true,
+    },
+    password: {
+        type: String,
+        required: true,
+        select: false,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 })
 
 userSchema.pre("save", async function(next){
