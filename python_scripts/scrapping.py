@@ -1,10 +1,11 @@
 import json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options  
+from utils import list_formater
 from time import sleep
 
 chrome_options = Options()
-# chrome_options.add_argument("--headless")
+chrome_options.add_argument("--headless")
 
 driver = webdriver.Chrome(options=chrome_options)
 
@@ -33,7 +34,7 @@ for item in ITEMS:
     paragraphs = extra_info.find_elements_by_tag_name("p")
     point_item["phone"] = paragraphs[0].get_attribute('innerText')
     point_item["description"] = paragraphs[1].get_attribute('innerText')
-    point_item["items"] = paragraphs[2].get_attribute('innerText')
+    point_item["items"] = list_formater.format_string_to_list(paragraphs[2].get_attribute('innerText'))
 
     points_array.append(point_item)
 
