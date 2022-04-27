@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 
-const userSchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -12,11 +12,6 @@ const userSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-    },
-    ecoPonto: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'EcoPonto',
-        required: true,
     },
     createdAt: {
         type: Date,
