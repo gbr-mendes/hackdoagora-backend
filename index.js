@@ -12,6 +12,9 @@ const upload = require("./utils/multer")
 // routes import
 const authRoutes = require("./routes/auth")
 
+// general middlewares
+app.use(bodyParser.json())
+
 // test routes
 app.get("/", (req, resp)=> { // route to test deploye
     resp.json({success: "Application deployed"})
