@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt")
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true,
+        required: true,
     },
     email: {
         type: String,
@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false,
     },
     createdAt: {
         type: Date,
@@ -27,7 +26,6 @@ userSchema.pre("save", async function(next){
     const salt = await bcrypt.genSalt()
     const hashedPassword = await bcrypt.hash(this.password, salt)
     this.password = hashedPassword
-
     next()
 })
 
