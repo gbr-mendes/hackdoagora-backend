@@ -28,7 +28,7 @@ controller.createUser = async (req, resp) =>{
         if(user){
             const token = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET)
             resp.header("auth-token", token)
-            resp.status(201).json({success: "User created"})
+            resp.status(201).json({success: "User created", token})
         }
     }catch(err){
         console.log(err)
