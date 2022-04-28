@@ -36,7 +36,7 @@ def format_string_to_list(string, items):
     for item in items:
         for formatedItem in formatedItems:
             if item.lower() in formatedItem.lower() or item.lower() == formatedItem.lower():
-                if item not in returned_list:
+                if items_id[item] not in returned_list:
                     returned_list.append(items_id[item])
     return returned_list
 
