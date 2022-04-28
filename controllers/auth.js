@@ -63,4 +63,17 @@ controller.loginUser = async (req, resp) => {
     resp.status(200).json({success: "User logged in", token})
 }
 
+controller.userProfile = async (req, resp) => {
+    const token = req.header("auth-token")
+    const {name, email, isEcoSpot} = jwt.verify(token, process.env.TOKEN_SECRET)
+
+    const user = await UserModel.findOne({email})
+    if(!user){
+        resp.status(400).json({error: "User not found"})
+        return
+    }
+
+    resp.status(200).json({name, email, isEcoSpot})
+}
+
 module.exports = controller
