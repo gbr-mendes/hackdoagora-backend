@@ -60,7 +60,7 @@ controller.loginUser = async (req, resp) => {
     }
     const token = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET)
     resp.header("auth-token", token)
-    resp.status(200).json({success: "User logged in"})
+    resp.status(200).json({success: "User logged in", token})
 }
 
 module.exports = controller
