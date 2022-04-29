@@ -24,4 +24,4 @@ const ecoPontoSchema = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model("EcoPonto", userSchema)
+module.exports = mongoose.model("EcoPonto", ecoPontoSchema)
