@@ -18,7 +18,7 @@ controller.createUser = async (req, resp) =>{
 
     const exists = await UserModel.findOne({email})
     if(exists){
-        resp.status(400).json({error: "An user with this email already exists"})
+        resp.status(400).json({error: "Usuário já cadastrado"})
         return
     }
 
@@ -28,11 +28,11 @@ controller.createUser = async (req, resp) =>{
         if(user){
             const token = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET)
             resp.header("auth-token", token)
-            resp.status(201).json({success: "User created", token})
+            resp.status(201).json({success: "Usuário criado com sucesso!", token})
         }
     }catch(err){
         console.log(err)
-        resp.status(500).json({error: "An error has occurred"})
+        resp.status(500).json({error: "Ocorreu um erro inesperado"})
     }
 }
 
@@ -49,18 +49,31 @@ controller.loginUser = async (req, resp) => {
     
     const user = await UserModel.findOne({email})
     if(!user){
-        resp.status(400).json({error: "User with this email not found"})
+        resp.status(400).json({error: "Usuário ou senha inválidos"})
         return
     }
     
     const validPass = await bcrypt.compare(password, user.password)
     if(!validPass){
-        resp.status(400).json({error: "Incorrect password"})
+        resp.status(400).json({error: "Usuário ou senha inválidos"})
         return
     }
     const token = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET)
     resp.header("auth-token", token)
-    resp.status(200).json({success: "User logged in", token})
+    resp.status(200).json({success: "Logado com sucesso!", token})
+}
+
+controller.userProfile = async (req, resp) => {
+    const token = req.header("auth-token")
+    const {name, email, isEcoSpot} = jwt.verify(token, process.env.TOKEN_SECRET)
+
+    const user = await UserModel.findOne({email})
+    if(!user){
+        resp.status(400).json({error: "Usuário não encontrado"})
+        return
+    }
+
+    resp.status(200).json({name, email, isEcoSpot})
 }
 
 module.exports = controller
