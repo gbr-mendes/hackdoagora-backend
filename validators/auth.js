@@ -1,5 +1,6 @@
 const Joi = require("joi")
 const jwt = require("jsonwebtoken")
+const {cpf} = require("cpf-cnpj-validator")
 
 const registerValidation = (data) =>{
     const schema = Joi.object({
@@ -14,6 +15,15 @@ const registerValidation = (data) =>{
             .required()
             .messages({ 
                 'any.required': `O campo email é obrigatório`
+            }),
+        cpf: Joi.string()
+            .custom((value, helpers)=> {
+                if(cpf.isValid(value)){
+                    return helpers.error("any.invalid")
+                }
+            })
+            .messages({
+                'any.invalid': `Informe um CPF válido`
             }),
         password: Joi.string()
             .required()
