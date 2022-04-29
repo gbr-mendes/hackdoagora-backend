@@ -12,6 +12,26 @@ const userSchema = new mongoose.Schema({
         required: true,
         lowercase: true,
     },
+    cpf: {
+        type: String,
+        unique: true,
+        required: true,
+    },
+    profileImage: {
+        type: String,
+    },
+    score: {
+        type: Number,
+        default: 0,
+    },
+    amountDescatarded: {
+        type: Number,
+        default: 0
+    },
+    extract: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Extract"
+    },
     password: {
         type: String,
         required: true,
@@ -20,7 +40,7 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    isEcoSpot: {
+    isAdmin: {
         type: Boolean,
         default: false
     }
