@@ -5,8 +5,8 @@ const UserModel = require("../models/User")
 const authValidator = require("../validators/auth")
 
 controller.createUser = async (req, resp) =>{
-    const {name, email, password, confirmPassword} = req.body
-    const data = {name, email, password, confirmPassword}
+    const {name, email, cpf, password, confirmPassword} = req.body
+    const data = {name, email, cpf, password, confirmPassword}
     const {error} = authValidator.registerValidation(data)
     
     

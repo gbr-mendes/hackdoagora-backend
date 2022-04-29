@@ -16,13 +16,16 @@ const registerValidation = (data) =>{
             .messages({ 
                 'any.required': `O campo email é obrigatório`
             }),
-        cpf: Joi.string()
-            .custom((value, helpers)=> {
-                if(cpf.isValid(value)){
+        cpf: Joi.custom((value, helpers)=> {
+                if(!cpf.isValid(value)){
                     return helpers.error("any.invalid")
                 }
+                return value
             })
+            .required()
+            
             .messages({
+                'any.required': `O campo CPF é obrigatório`,
                 'any.invalid': `Informe um CPF válido`
             }),
         password: Joi.string()
