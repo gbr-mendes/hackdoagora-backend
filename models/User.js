@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false,
     },
     passwordResetToken: {
         type: String,
@@ -26,13 +25,16 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    isEcoSpot: {
+        type: Boolean,
+        default: false
+    }
 })
 
 userSchema.pre("save", async function(next){
     const salt = await bcrypt.genSalt()
     const hashedPassword = await bcrypt.hash(this.password, salt)
     this.password = hashedPassword
-
     next()
 })
 

@@ -5,17 +5,29 @@ const registerValidation = (data) =>{
     const schema = Joi.object({
         name: Joi.string()
             .min(6)
-            .required(),
+            .required()
+            .messages({ 
+                'any.required': `O campo nome é obrigatório`
+            }),
         email: Joi.string()
             .email()
-            .required(),
+            .required()
+            .messages({ 
+                'any.required': `O campo email é obrigatório`
+            }),
         password: Joi.string()
             .required()
-            .min(8),
+            .min(8)
+            .messages({ 
+                'any.required': `O campo senha é obrigatório`
+            }),
         confirmPassword: Joi.any()
             .equal(Joi.ref("password"))
             .required()
-            .messages({ 'any.only': 'Passwords does not match' })
+            .messages({ 
+                'any.only': 'Senhas não conferem' ,
+                'any.required': `Você precisa confirmar sua senha`
+            })
 
     })
     return schema.validate(data)
@@ -25,10 +37,16 @@ const loginValidation = (data) => {
     const schema = Joi.object({
         email: Joi.string()
             .email()
-            .required(),
+            .required()
+            .messages({ 
+                'any.required': `O campo email é obrigatório`
+            }),
         password: Joi.string()
             .required()
             .min(8)
+            .messages({ 
+                'any.required': `O campo senha é obrigatório`
+            })
     })
     return schema.validate(data)
 }
@@ -36,7 +54,7 @@ const loginValidation = (data) => {
 const verifyTokenMiddleware = (req, resp, next) =>{
     const token = req.header("auth-token")
     if(!token){
-        return resp.status(401).json({error: "Permission Denied"})
+        return resp.status(401).json({error: "Usuário não tem permissão para acessar essa página"})
     }
 
     try{
@@ -44,7 +62,7 @@ const verifyTokenMiddleware = (req, resp, next) =>{
         req.user = verified
         next()
     }catch(err){
-        resp.status(400).json({error: "Invalid Token"})
+        resp.status(400).json({error: "Token Inválido"})
     }
 }
 

@@ -1,0 +1,77 @@
+Usuário:
+	- Atualização dos schemas
+	- CRUD:
+	    - Registro de usuário obedecendo os campos obrigatórios listados no fluxograma (POST)
+	    - Definição da rota para exibição dos dados do usuário logado.
+			O usuário só tem autorização para ver suas próprias   informações(GET)
+	    - Definição da rota para atualização dos dados do usuário em seu dashboard.
+			O usuário só tem autorização para atualizar seus próprios dados. 
+			Essa rota tem que aceitar dados do tipo multipart/form-data, 
+			devido a possibilidade o usuário atualizar sua foto de perfil (PATCH)
+	    Obs: Não precisamos de rota para deleção de usuário
+	    
+	    Para classe usuário, ainda é necessário ajustar a rota de login, para permitir login por CPF
+
+________________________________________________________________________________________________________________________________________
+Extrato:
+	- Definição dos schemas conforme modelagem
+________________________________________________________________________________________________________________________________________
+
+Endereço
+	- Definição dos schemas conforme modelagem
+
+____________________________________________________________________________________________________________________________________________
+
+Lixeira
+	- Definição do schema conforme modelagem
+	- CRUD:
+	   - Definição de rota para cadastro de lixeira.
+	   		Apenas usuários administradores logados podem fazer o cadastro da lixeira(POST)
+	   - Definição de rota para atualização da lixeira.
+	   		Apenas usuários administradores logados podem fazer a atualização da lixeira(PATCH)
+	   - Definição de rota para a listagem das lixeiras. Rota pública (GET)
+	   Obs: Não precisamos de método para deleção de lixeira. Pode implementar caso dê tempo
+_____________________________________________________________________________________________________________________________________________
+
+Capacidade
+	- Definição dos schemas conforme modelagem
+____________________________________________________________________________________________________________________________________________
+
+Descarte:
+	- Definição dos schemas conforme modelagem
+	- CRUD:
+		- Definição de rota para o método de descarte.
+			Essa rota requer a autenticação do usuário pelo terminal da lixeira e a identificação
+			da lixeira para respectivamente atualizar o score do usuário e atualizar a capacidade da
+			lixeira no sistema.
+			Essa rota recebe como parametro o id do item que está sendo descartado e a quantidade. 
+			Internamente, além do score, o extrato do usuário tem que ter a adição do descarte no array
+			de descartes(POST)
+____________________________________________________________________________________________________________________________________________
+
+Reciclável
+	- Definição dos schemas conforme modelagem
+	- CRUD
+		- Definição de rota para a adição de recicláveis ao sistema.
+			Apenas usuários administradores e logados podem fazer a adição (POST)
+		- Definição de rota para atualização de recicláveis no sistema.
+			Apenas usuários administradores logados podem fazer a atualização (PATH)
+		- Definição de rota para a listagem de items recicláveis de nosso sistema. Rota pública (GET)
+____________________________________________________________________________________________________________________________________________
+
+EmpresaParceira
+	- Definição de schemas conforme modelagem
+	- CRUD
+		- Definição de rota para adição de empresa parceira no sistema
+			Apenas usuários administradores e logados podem fazer a adição (POST)
+		- Definição de rota para atualização das empresas parceiras no sistema.
+			Apenas usuários administradores logados podem fazer a atualização (PATH)
+		- Definição de rota para a exclusão de empresas parceira do sistema.
+			Apenas usuários administradores logados podem fazer a exclusão (DELETE)
+		- Definição de rota para listagem de empresas parceiras.Rota pública (GET)
+____________________________________________________________________________________________________________________________________________
+
+Cupom
+	- Definição de schemas conforme modelagem
+	- Definição de rota para para possibilitar a troca de pontos por cupons. Ainda devemos estudar
+		a melhor forma de implementação
