@@ -38,8 +38,8 @@ controller.createUser = async (req, resp) =>{
 }
 
 controller.loginUser = async (req, resp) => {
-    const {email, password} = req.body
-    const data = {email, password}
+    const {credentialLogin, password} = req.body
+    const data = {credentialLogin, password}
     
     const {error} = authValidator.loginValidation(data)
     if(error){
@@ -48,7 +48,7 @@ controller.loginUser = async (req, resp) => {
         return
     }
     
-    const user = await UserModel.findOne({email})
+    const user = await UserModel.findOne({$or:[{email: credentialLogin}, {cpf: credentialLogin}]})
     if(!user){
         resp.status(400).json({error: "Usuário ou senha inválidos"})
         return
