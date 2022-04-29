@@ -54,3 +54,21 @@ Reciclável
 		- Definição de rota para atualização de recicláveis no sistema.
 			Apenas usuários administradores logados podem fazer a atualização (PATH)
 		- Definição de rota para a listagem de items recicláveis de nosso sistema. Rota pública (GET)
+____________________________________________________________________________________________________________________________________________
+
+EmpresaParceira
+	- Definição de schemas conforme modelagem
+	- CRUD
+		- Definição de rota para adição de empresa parceira no sistema
+			Apenas usuários administradores e logados podem fazer a adição (POST)
+		- Definição de rota para atualização das empresas parceiras no sistema.
+			Apenas usuários administradores logados podem fazer a atualização (PATH)
+		- Definição de rota para a exclusão de empresas parceira do sistema.
+			Apenas usuários administradores logados podem fazer a exclusão (DELETE)
+		- Definição de rota para listagem de empresas parceiras.Rota pública (GET)
+____________________________________________________________________________________________________________________________________________
+
+Cupom
+	- Definição de schemas conforme modelagem
+	- Definição de rota para para possibilitar a troca de pontos por cupons. Ainda devemos estudar
+		a melhor forma de implementação
