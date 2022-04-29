@@ -1,5 +1,6 @@
 const Joi = require("joi")
 const jwt = require("jsonwebtoken")
+const {cpf} = require("cpf-cnpj-validator")
 
 const registerValidation = (data) =>{
     const schema = Joi.object({
@@ -14,6 +15,18 @@ const registerValidation = (data) =>{
             .required()
             .messages({ 
                 'any.required': `O campo email é obrigatório`
+            }),
+        cpf: Joi.custom((value, helpers)=> {
+                if(!cpf.isValid(value)){
+                    return helpers.error("any.invalid")
+                }
+                return value
+            })
+            .required()
+            
+            .messages({
+                'any.required': `O campo CPF é obrigatório`,
+                'any.invalid': `Informe um CPF válido`
             }),
         password: Joi.string()
             .required()
@@ -51,10 +64,23 @@ const loginValidation = (data) => {
     return schema.validate(data)
 }
 
+const updateUserValidator = (data) => {
+    const schema = Joi.object({
+        name: Joi.string(),
+        email: Joi.string()
+            .email()
+            .messages({
+                'any.invalid': `Informe um email válido`
+            }),
+        profileImage: Joi.string()
+    })
+    return schema.validate(data)
+}
+
 const verifyTokenMiddleware = (req, resp, next) =>{
     const token = req.header("auth-token")
     if(!token){
-        return resp.status(401).json({error: "Usuário não tem permissão para acessar essa página"})
+        return resp.status(401).json({error: "Permissão Negada"})
     }
 
     try{
@@ -66,4 +92,4 @@ const verifyTokenMiddleware = (req, resp, next) =>{
     }
 }
 
-module.exports = {registerValidation, loginValidation, verifyTokenMiddleware}
+module.exports = {registerValidation, loginValidation, verifyTokenMiddleware, updateUserValidator}
