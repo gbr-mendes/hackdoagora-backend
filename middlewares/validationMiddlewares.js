@@ -22,4 +22,15 @@ async function checkAdminFieldOnUserCreation(req, resp, next) {
     }
 }
 
-module.exports = {checkAdminFieldOnUserCreation}
+async function checkIfAdmin(req, resp, next) {
+    const token = req.header('auth-token')
+    const {email} = jwt.verify(token, process.env.TOKEN_SECRET)
+    const {isAdmin} = await UserModel.findOne({email})
+    if(!isAdmin){
+        resp.status(403).json({error: "Permissão Negada"})
+        return
+    }
+    next()
+}
+
+module.exports = {checkAdminFieldOnUserCreation, checkIfAdmin}
