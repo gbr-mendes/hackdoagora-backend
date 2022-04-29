@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const UserModel = require("../models/User")
 const authValidator = require("../validators/auth")
+const cloudinary = require("../utils/cloudinary")
+
 
 controller.createUser = async (req, resp) =>{
     const {name, email, cpf, password, confirmPassword} = req.body
@@ -62,9 +64,45 @@ controller.loginUser = async (req, resp) => {
     resp.status(200).json({success: "Logado com sucesso!", token})
 }
 
+controller.updateUser = async (req, resp) => {
+    const {error} = authValidator.updateUserValidator(req.body)
+    if(error){
+        const errorMessage = {error: error.details[0].message}
+        resp.status(400).json(errorMessage)
+        return
+    }
+    const token = req.header("auth-token")
+    const {email} = jwt.verify(token, process.env.TOKEN_SECRET)
+    const data = req.body
+
+    if(req.file.path){
+        try{
+            const {secure_url} = await cloudinary.uploader.upload(req.file.path)    
+            
+            data.profileImage = secure_url
+            
+            await UserModel.findOneAndUpdate({email}, data, {new: false})
+            
+            resp.satus(200).json({success: "Usuário atualizado com sucesso"})
+
+        }catch(err){
+            console.log(err)
+            resp.status(500).json({error: "Ocorreu um erro inesperado ao atualizar o usuário"})
+        }
+    }else{
+        try{              
+            await UserModel.findOneAndUpdate({email}, data, {new: false})
+            resp.satus(200).json({success: "Usuário atualizado com sucesso"})
+        }catch(err){
+            console.log(err)
+            resp.status(500).json({error: "Ocorreu um erro inesperado ao atualizar o usuário"})
+        }
+    }
+}
+
 controller.userProfile = async (req, resp) => {
     const token = req.header("auth-token")
-    const {name, email} = jwt.verify(token, process.env.TOKEN_SECRET)
+    const {name, email, cpf, profileImage, score, amountDescatarded} = jwt.verify(token, process.env.TOKEN_SECRET)
 
     const user = await UserModel.findOne({email})
     if(!user){
@@ -72,7 +110,7 @@ controller.userProfile = async (req, resp) => {
         return
     }
 
-    resp.status(200).json({name, email, isEcoSpot})
+    resp.status(200).json({name, email, cpf, profileImage, score, amountDescatarded})
 }
 
 module.exports = controller

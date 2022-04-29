@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
     },
     profileImage: {
         type: String,
+        default: ""
     },
     score: {
         type: Number,

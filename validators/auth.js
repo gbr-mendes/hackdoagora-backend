@@ -64,6 +64,19 @@ const loginValidation = (data) => {
     return schema.validate(data)
 }
 
+const updateUserValidator = (data) => {
+    const schema = Joi.object({
+        name: Joi.string(),
+        email: Joi.string()
+            .email()
+            .messages({
+                'any.invalid': `Informe um email válido`
+            }),
+        profileImage: Joi.string()
+    })
+    return schema.validate(data)
+}
+
 const verifyTokenMiddleware = (req, resp, next) =>{
     const token = req.header("auth-token")
     if(!token){
@@ -79,4 +92,4 @@ const verifyTokenMiddleware = (req, resp, next) =>{
     }
 }
 
-module.exports = {registerValidation, loginValidation, verifyTokenMiddleware}
+module.exports = {registerValidation, loginValidation, verifyTokenMiddleware, updateUserValidator}
