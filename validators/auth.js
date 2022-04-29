@@ -67,7 +67,7 @@ const loginValidation = (data) => {
 const verifyTokenMiddleware = (req, resp, next) =>{
     const token = req.header("auth-token")
     if(!token){
-        return resp.status(401).json({error: "Usuário não tem permissão para acessar essa página"})
+        return resp.status(401).json({error: "Permissão Negada"})
     }
 
     try{

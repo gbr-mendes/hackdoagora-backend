@@ -9,7 +9,6 @@ controller.createUser = async (req, resp) =>{
     const data = {name, email, cpf, password, confirmPassword}
     const {error} = authValidator.registerValidation(data)
     
-    
     if(error){
         const errorMessage = {error: error.details[0].message}
         resp.status(400).json(errorMessage)
@@ -65,7 +64,7 @@ controller.loginUser = async (req, resp) => {
 
 controller.userProfile = async (req, resp) => {
     const token = req.header("auth-token")
-    const {name, email, isEcoSpot} = jwt.verify(token, process.env.TOKEN_SECRET)
+    const {name, email} = jwt.verify(token, process.env.TOKEN_SECRET)
 
     const user = await UserModel.findOne({email})
     if(!user){
