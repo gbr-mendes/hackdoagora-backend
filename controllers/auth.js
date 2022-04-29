@@ -75,11 +75,13 @@ controller.updateUser = async (req, resp) => {
     const {email} = jwt.verify(token, process.env.TOKEN_SECRET)
     const data = req.body
 
-    if(req.file.path){
+    if(req.file){
         try{
-            const {secure_url} = await cloudinary.uploader.upload(req.file.path)    
-            
-            data.profileImage = secure_url
+            const path = req.file.path
+            if(path){
+                const {secure_url} = await cloudinary.uploader.upload(path)    
+                data.profileImage = secure_url
+            }
             
             await UserModel.findOneAndUpdate({email}, data, {new: false})
             
@@ -92,7 +94,7 @@ controller.updateUser = async (req, resp) => {
     }else{
         try{              
             await UserModel.findOneAndUpdate({email}, data, {new: false})
-            resp.satus(200).json({success: "Usuário atualizado com sucesso"})
+            resp.status(200).json({success: "Usuário atualizado com sucesso"})
         }catch(err){
             console.log(err)
             resp.status(500).json({error: "Ocorreu um erro inesperado ao atualizar o usuário"})
