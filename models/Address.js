@@ -1,25 +1,22 @@
 const mongoose = require("mongoose")
 
-
-const enderecoSchema = new mongoose.Schema({
-   
-    rua: {
+const addressSchema = new mongoose.Schema({
+    street: {
         type: String,
         required: true,
     },
-    estado: {
+    state: {
         type: String,
         required: true,
     },
-    cidade: {
+    city: {
         type: String,
         required: true,
     },
-    cep: {
+    zipcode: {
         type: String,
         required: true,
     },
-   
 })
 
-module.exports = mongoose.model("Endereco", enderecoSchema)
+module.exports = mongoose.model("Address", addressSchema)
