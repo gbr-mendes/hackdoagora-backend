@@ -2,9 +2,7 @@ const mongoose = require("mongoose")
 
 
 const enderecoSchema = new mongoose.Schema({
-    id: {
-        Object: id,
-    },
+   
     rua: {
         type: String,
         required: true,

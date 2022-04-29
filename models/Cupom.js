@@ -2,9 +2,7 @@ const mongoose = require("mongoose")
 
 
 const cupomSchema = new mongoose.Schema({
-    id: {
-        Object: id,
-    },
+   
     nome: {
         type: String,
     },

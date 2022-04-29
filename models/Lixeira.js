@@ -2,9 +2,7 @@ const mongoose = require("mongoose")
 
 
 const lixeiraSchema = new mongoose.Schema({
-    id: {
-        Object: id,
-    },
+   
     endereco: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Endereco',
