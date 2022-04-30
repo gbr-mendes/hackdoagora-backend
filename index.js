@@ -13,6 +13,7 @@ const upload = require("./utils/multer")
 // routes import
 const authRoutes = require("./routes/auth")
 const dumpRoutes = require("./routes/dump")
+const partnerCompaniesRoutes = require("./routes/partnerCompany")
 
 // general middlewares
 app.use(bodyParser.json())
@@ -23,20 +24,10 @@ app.get("/", (req, resp)=> { // route to test deploye
     resp.json({success: "Application deployed"})
 })
 
-app.post('/upload', upload.single("image"), async (req, resp) => { // route to test upload images to cloudinary
-    try{
-        console.log(req.file.path)
-        const result = await cloudinary.uploader.upload(req.file.path)
-        resp.json(result)
-
-    }catch(err){
-        console.log(err)
-    }
-})
-
 // Routes middleware
 app.use("/api/auth", authRoutes)
 app.use("/api/system", dumpRoutes)
+app.use("/api/companies", partnerCompaniesRoutes)
 
 // Db connection
 const db = require("./models/db")
