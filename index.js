@@ -12,6 +12,7 @@ const upload = require("./utils/multer")
 
 // routes import
 const authRoutes = require("./routes/auth")
+const partnersompaniesRoutes = require("./routes/partnerCompany")
 
 // general middlewares
 app.use(bodyParser.json())
@@ -35,6 +36,8 @@ app.post('/upload', upload.single("image"), async (req, resp) => { // route to t
 
 // Routes middleware
 app.use("/api/auth", authRoutes)
+app.use("/api/partnerCompanies", partnersompaniesRoutes)
+
 
 // Db connection
 const db = require("./models/db")
