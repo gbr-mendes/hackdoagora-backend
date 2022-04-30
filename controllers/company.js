@@ -2,9 +2,9 @@ const controller = {}
 const companyModel = require("../models/company")
 const companyValidator = require("../validators/company")
 
-controller.createEmpresaParceira = async (req, resp) => {
-  const { name, cnpj, cupom } = req.body
-  const data = { name, cnpj, cupom }
+controller.createPartnerCompany = async (req, resp) => {
+  const { name, cnpj, coupons } = req.body
+  const data = { name, cnpj, coupons }
   const { error } = companyValidator.registerValidation(data)
   if (error) {
     const errorMessage = { error: error.details[0].message }
@@ -18,8 +18,8 @@ controller.createEmpresaParceira = async (req, resp) => {
   }
 
   try {
-    const empresaParceira = await companyModel.create(data)
-    if (empresaParceira) {
+    const partnerCompany = await companyModel.create(data)
+    if (partnerCompany) {
       resp.status(201).json({ success: "Empresa parceira criada com sucesso!" })
     }
   } catch (err) {
@@ -28,12 +28,12 @@ controller.createEmpresaParceira = async (req, resp) => {
   }
 }
 
-controller.showEmpresaParceira = async (req, resp) => {
+controller.retrivePartnerCompany = async (req, resp) => {
   const { id } = req.params
   try {
-    const empresaParceira = await companyModel.findById(id)
-    if (empresaParceira) {
-      resp.status(200).json(empresaParceira)
+    const partnerCompany = await companyModel.findById(id)
+    if (partnerCompany) {
+      resp.status(200).json(partnerCompany)
     }
   } catch (err) {
     console.log(err)
@@ -41,6 +41,6 @@ controller.showEmpresaParceira = async (req, resp) => {
   }
 }
 
-controller.updateEmpresaParceira = async (req, resp) => {
+controller.updatePartnerCompany = async (req, resp) => {
 }
 module.exports = controller

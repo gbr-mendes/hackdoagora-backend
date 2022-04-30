@@ -1,7 +1,6 @@
 const Joi = require("joi")
 const { cnpj } = require("cpf-cnpj-validator")
 
-
 const registerValidation = (data) => {
     const schema = Joi.object({
         name: Joi.string()
