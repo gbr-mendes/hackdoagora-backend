@@ -5,7 +5,6 @@ const RecyclableModel = require("../models/Recyclable")
 const addressValidator = require("../validators/address")
 const dumpValidator = require("../validators/dump")
 const CapacityModel = require("../models/Capacity")
-const Dump = require("../models/Dump")
 const ordererDumpHelper = require("../utils/hellperFunctions").orderDumpsByRegion
 
 controller.createDump = async (req, resp) => {
