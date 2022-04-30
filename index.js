@@ -14,6 +14,7 @@ const upload = require("./utils/multer")
 const authRoutes = require("./routes/auth")
 const dumpRoutes = require("./routes/dump")
 const partnerCompaniesRoutes = require("./routes/partnerCompany")
+const extractRoutes = require("./routes/extract")
 
 // general middlewares
 app.use(bodyParser.json())
@@ -27,6 +28,7 @@ app.get("/", (req, resp)=> { // route to test deploye
 // Routes middleware
 app.use("/api/auth", authRoutes)
 app.use("/api/system", dumpRoutes)
+app.use("/api/extract", extractRoutes)
 app.use("/api/companies", partnerCompaniesRoutes)
 
 // Db connection
