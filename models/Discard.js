@@ -10,6 +10,10 @@ const discardSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 module.exports = mongoose.model("Discard", discardSchema)
