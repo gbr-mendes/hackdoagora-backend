@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const UserModel = require("../models/User")
 const authValidator = require("../validators/auth")
+const generateExtract = require("../utils/hellperFunctions").randonExtract
+const setUserScoreAndAmountDiscarded = require("../utils/hellperFunctions").setUserScoreAndAmountDiscarded
 const cloudinary = require("../utils/cloudinary")
 
 
@@ -28,12 +30,14 @@ controller.createUser = async (req, resp) =>{
         resp.status(400).json({error: "Email já cadastrado"})
         return
     }
-
+    const extract = await generateExtract()
+    data.extract = extract._id
     try{
         const user = await UserModel.create(data)
         
         if(user){
             const token = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET)
+            await setUserScoreAndAmountDiscarded(user._id, extract)
             resp.header("auth-token", token)
             resp.status(201).json({success: "Usuário criado com sucesso!", token})
         }

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-mongoose.extractSchema = new mongoose.Schema({
+const extractSchema = new mongoose.Schema({
     discards: [{type: mongoose.Schema.Types.ObjectId, ref: "Discard"}]
 })
 
