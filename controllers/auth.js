@@ -17,7 +17,7 @@ controller.createUser = async (req, resp) =>{
         return
     }
 
-    const cpfAlreadyRegistered = await UserModel.findOne({email})
+    const cpfAlreadyRegistered = await UserModel.findOne({cpf})
     if(cpfAlreadyRegistered){
         resp.status(400).json({error: "CPF já cadastrado"})
         return
