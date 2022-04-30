@@ -9,7 +9,7 @@ const recyclableSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-       
+
 })
 
 module.exports = mongoose.model("Recyclable", recyclableSchema)

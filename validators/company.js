@@ -5,7 +5,7 @@ const { cnpj } = require("cpf-cnpj-validator")
 const registerValidation = (data) => {
     const schema = Joi.object({
         name: Joi.string()
-            .min(6)
+            .min(2)
             .required()
             .messages({
                 'any.required': `O campo nome é obrigatório`
