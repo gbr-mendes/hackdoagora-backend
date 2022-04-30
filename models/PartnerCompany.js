@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const empresaSchema = new mongoose.Schema({
+const companySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -16,4 +16,4 @@ const empresaSchema = new mongoose.Schema({
     }]   
 })
 
-module.exports = mongoose.model("EmpresaParceira", empresaSchema)
+module.exports = mongoose.model("PartnerCompany", companySchema)

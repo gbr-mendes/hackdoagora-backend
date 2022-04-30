@@ -85,7 +85,7 @@ controller.updateUser = async (req, resp) => {
             
             await UserModel.findOneAndUpdate({email}, data, {new: false})
             
-            resp.satus(200).json({success: "Usuário atualizado com sucesso"})
+            resp.status(200).json({success: "Usuário atualizado com sucesso"})
 
         }catch(err){
             console.log(err)

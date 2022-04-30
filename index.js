@@ -12,7 +12,6 @@ const upload = require("./utils/multer")
 
 // routes import
 const authRoutes = require("./routes/auth")
-const ecoPontoRoutes = require("./routes/ecoPonto")
 
 // general middlewares
 app.use(bodyParser.json())
