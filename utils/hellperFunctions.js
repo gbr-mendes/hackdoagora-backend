@@ -2,6 +2,7 @@ const ExtractModel = require("../models/Extract")
 const DiscardModel = require("../models/Discard")
 const RecyclableModel = require("../models/Recyclable")
 const UserModel = require("../models/User")
+const DumpModel = require("../models/Dump")
 
 function orderDumpsByRegion(queryset){
     const orderedQueryset = {norte:[],sul:[], leste:[], oeste:[], centro:[]}
@@ -40,11 +41,13 @@ function getRandomInt(min, max) {
 async function randonExtract(){
     const discards = []
     const reciclables = await RecyclableModel.find()
+    const dumps = await DumpModel.find()
     const totalItems = getRandomInt(5,11)
     for(let i=0; i< totalItems; i++){
+        const dump = dumps[getRandomInt(0, dumps.length)]
         const quantity = getRandomArbitrary(5, 2000).toFixed(2)
         const recyclable = reciclables[getRandomInt(0, reciclables.length)]
-        const discard = await DiscardModel.create({recyclable: recyclable._id, quantity})
+        const discard = await DiscardModel.create({recyclable: recyclable._id, quantity, dump: dump._id})
         discards.push(discard._id)
     }
     const extract = await ExtractModel.create({discards})
@@ -54,10 +57,11 @@ async function randonExtract(){
 async function discardsFormater(discards){
     const discardsFormated = await Promise.all(discards.map(async discard=> {
         const discardInfo = await DiscardModel.findById(discard._id)
-        const {recyclable, quantity, date} = discardInfo
+        const {dump, recyclable, quantity, date} = discardInfo
+        const dumpInfo = await DumpModel.findById(dump).select(["-_id", "name"])
         const {name, value} = await RecyclableModel.findById(recyclable)
         const pointsEarned = Math.ceil(quantity*value/1000)
-        return {name, value, date, quantity ,pointsEarned}
+        return {dump:dumpInfo,name, value, date, quantity ,pointsEarned}
     }))
     return discardsFormated
 }
