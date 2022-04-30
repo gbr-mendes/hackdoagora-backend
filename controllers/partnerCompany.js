@@ -1,19 +1,19 @@
 const controller = {}
-const PartnerCompanyModel = require("../models/partnerCompany")
-const CouponModel = require("../models/coupon")
+const PartnerCompanyModel = require("../models/PartnerCompany")
+const CouponModel = require("../models/Coupon")
 const companyValidator = require("../validators/company")
 
 controller.createPartnerCompany = async (req, resp) => {
   const { name, cnpj, coupons } = req.body
   const data = { name, cnpj, couponsIds }
+  const couponsIds = coupons.map(async (coupon)=>{
+    const {_id} = await CouponModel.create(coupon)
+    return _id
+})
   if(coupons.length < 1){
     resp.status(400).json({error: "Você precisa adicionar ao menos um cupom"})
     return
   }
-  const couponsIds = coupons.map(coupon=>{
-      const {_id} = await CouponModel.create(coupon)
-      return _id
-  })
   const { error } = companyValidator.registerValidation(data)
   if (error) {
     const errorMessage = { error: error.details[0].message }
