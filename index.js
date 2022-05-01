@@ -7,8 +7,8 @@ require('dotenv').config()
 // dependencies import
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('./swagger_output.json')
+// const swaggerUi = require('swagger-ui-express')
+// const swaggerFile = require('./swagger_output.json')
 
 // routes import
 const authRoutes = require("./routes/auth")
@@ -28,7 +28,7 @@ app.get("/", (req, resp)=> { // route to test deploye
 })
 
 // Routes middleware
-app.use('/api/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+// app.use('/api/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 app.use("/api/auth", authRoutes)
 app.use("/api/system", dumpRoutes)
 app.use("/api/extract", extractRoutes)
