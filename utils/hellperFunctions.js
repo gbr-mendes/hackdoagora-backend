@@ -73,7 +73,7 @@ async function setUserScoreAndAmountDiscarded(userId, extract){
     await discards.map(async discard=>{
         const {recyclable, quantity} = await DiscardModel.findById(discard)
         const {value} = await RecyclableModel.findById(recyclable)
-        data.score += Math.ceil(quantity*value/3)
+        data.score += Math.ceil(quantity/100*3)
         data.amountDescatarded+=quantity
         await UserModel.findByIdAndUpdate(userId, data)
     })
