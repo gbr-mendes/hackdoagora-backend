@@ -60,7 +60,7 @@ async function discardsFormater(discards){
         const {dump, recyclable, quantity, date} = discardInfo
         const dumpInfo = await DumpModel.findById(dump).select(["-_id", "name"])
         const {name, value} = await RecyclableModel.findById(recyclable)
-        const pointsEarned = Math.ceil(quantity*value/1000)
+        const pointsEarned = Math.ceil(quantity/100*value)
         return {dump:dumpInfo,name, value, date, quantity ,pointsEarned}
     }))
     return discardsFormated
