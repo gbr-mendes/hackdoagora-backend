@@ -45,7 +45,7 @@ async function randonExtract(){
     const totalItems = getRandomInt(5,11)
     for(let i=0; i< totalItems; i++){
         const dump = dumps[getRandomInt(0, dumps.length)]
-        const quantity = getRandomArbitrary(5, 2000).toFixed(2)
+        const quantity = getRandomArbitrary(100, 2000).toFixed(2)
         const recyclable = reciclables[getRandomInt(0, reciclables.length)]
         const discard = await DiscardModel.create({recyclable: recyclable._id, quantity, dump: dump._id})
         discards.push(discard._id)
@@ -73,7 +73,7 @@ async function setUserScoreAndAmountDiscarded(userId, extract){
     await discards.map(async discard=>{
         const {recyclable, quantity} = await DiscardModel.findById(discard)
         const {value} = await RecyclableModel.findById(recyclable)
-        data.score += Math.ceil(quantity*value/1000)
+        data.score += Math.ceil(quantity*value/3)
         data.amountDescatarded+=quantity
         await UserModel.findByIdAndUpdate(userId, data)
     })
