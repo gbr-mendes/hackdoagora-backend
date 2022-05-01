@@ -16,6 +16,7 @@ const dumpRoutes = require("./routes/dump")
 const partnerCompaniesRoutes = require("./routes/partnerCompany")
 const extractRoutes = require("./routes/extract")
 const checkoutRoutes = require("./routes/checkout")
+const couponsRoutes = require("./routes/coupons")
 
 // general middlewares
 app.use(bodyParser.json())
@@ -32,6 +33,7 @@ app.use("/api/system", dumpRoutes)
 app.use("/api/extract", extractRoutes)
 app.use("/api/companies", partnerCompaniesRoutes)
 app.use("/api/checkout", checkoutRoutes)
+app.use("/api/coupons", couponsRoutes)
 
 // Db connection
 const db = require("./models/db")
