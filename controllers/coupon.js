@@ -29,12 +29,19 @@ controller.listCoupons = async (req, resp) => {
 }
 
 controller.filterCouponsByCompany = async (req, res) => {
+    // #swagger.tags = ['Coupon']
+    // #swagger.description = 'Endpoint para filtrar cupons pelo nome da empresa. Nenhum privilégio administrativo é requerido'
     const name = req.params.companyName
     try {
         const partnerCompany = await CompanyModel.findOne({name})
+        const queryset = []
         if (partnerCompany) {
             const coupons = await CouponModel.find({_id: {$in: partnerCompany.coupons}})
-            res.status(200).json(coupons)
+            coupons.map(coupon => {
+                const {_id, name, value} = coupon
+                queryset.push({_id, name, value, companyName: partnerCompany.name, companyImage:partnerCompany.image} )
+            })
+            res.status(200).json(queryset)
         }
         else {
             res.status(400).json({error: "Empresa não encontrada"})

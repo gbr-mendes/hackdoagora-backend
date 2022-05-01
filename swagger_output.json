@@ -576,6 +576,35 @@
         }
       }
     },
+    "/api/coupons/{companyName}": {
+      "get": {
+        "tags": [
+          "Coupon"
+        ],
+        "description": "Endpoint para filtrar cupons pelo nome da empresa. Nenhum privilégio administrativo é requerido",
+        "parameters": [
+          {
+            "name": "companyName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/coupons/": {
       "get": {
         "tags": [
