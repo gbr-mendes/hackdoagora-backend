@@ -28,4 +28,21 @@ controller.listCoupons = async (req, resp) => {
     }
 }
 
+controller.filterCouponsByCompany = async (req, res) => {
+    const name = req.params.companyName
+    try {
+        const partnerCompany = await CompanyModel.findOne({name})
+        if (partnerCompany) {
+            const coupons = await CouponModel.find({_id: {$in: partnerCompany.coupons}})
+            res.status(200).json(coupons)
+        }
+        else {
+            res.status(400).json({error: "Empresa não encontrada"})
+        }
+    }
+    catch (err) {
+        res.status(500).json({error: err})
+    }
+  }
+
 module.exports = controller
