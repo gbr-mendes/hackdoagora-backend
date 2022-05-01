@@ -12,7 +12,7 @@ const doc = {
     },
     host: process.env.HOST || "hackdoagora-backend.herokuapp.com",
     basePath: "/",
-    schemes: ['http', 'https'],
+    schemes: ['https'],
     consumes: ['application/json', 'multipart/form-data'],
     produces: ['application/json'],
     tags: [
