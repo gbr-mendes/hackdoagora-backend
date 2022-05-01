@@ -10,7 +10,7 @@ const doc = {
         title: "API- Troca Inteligente",
         description: "Essa documentação descreve todas a rotas implementadas para o projeto Troca Inteligente, desenvolvido para o evento Provi HackDoAgora"
     },
-    host: process.env.HOST || "localhost:3000",
+    host: process.env.HOST || "hackdoagora-backend.herokuapp.com",
     basePath: "/",
     schemes: ['http', 'https'],
     consumes: ['application/json', 'multipart/form-data'],
