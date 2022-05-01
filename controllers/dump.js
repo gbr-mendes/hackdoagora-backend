@@ -10,6 +10,7 @@ const ordererDumpHelper = require("../utils/hellperFunctions").orderDumpsByRegio
 controller.createDump = async (req, resp) => {
     // #swagger.tags = ['Dump']
     // #swagger.description = 'Endpoint para criação de lixeiras inteligentes. É necessário estar logado e se um usuário admin. O campo região só aceita os valores Norte, Sul, Leste, Oeste e Centro'
+    // #swagger.parameters['auth-token'] = { description: 'JWT para autenticação', in: 'header' }
      /*	#swagger.requestBody = {
             required: true,
             "@content": {
