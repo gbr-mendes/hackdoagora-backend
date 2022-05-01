@@ -7,9 +7,6 @@
   },
   "servers": [
     {
-      "url": "http://hackdoagora-backend.herokuapp.com/"
-    },
-    {
       "url": "https://hackdoagora-backend.herokuapp.com/"
     }
   ],
