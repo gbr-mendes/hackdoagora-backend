@@ -7,7 +7,7 @@
 
 ##
 <h3 align="center"> 
-    <img alt="Troca Inteligente" title="#TrocaInteligente" width="400" src="https://media.discordapp.net/attachments/709211305776513097/969749594101653505/Logo_Troca_inteligente.png?width=1217&height=314" />
+    <img alt="Troca Inteligente" title="#TrocaInteligente" width="400" src="https://i.imgur.com/SPOsol2.png" />
 </h3>
 
 ##
@@ -20,7 +20,7 @@
 
    - [Tópicos](#tópicos)
    - [Repositórios](#repositórios)
-   - [Deploy da aplicação](#deploy)
+   - [Deploy da aplicação](#deploy-da-aplicação)
    - [Sobre](#sobre-o-projeto)
    - [Iniciar Projeto](#como-iniciar-o-projeto)
    - [Instalação](#instalação)
@@ -38,7 +38,7 @@
 
 ---
 
-### Deploy
+### Deploy da aplicação
 * Back-end [Heroku](https://hackdoagora-backend.herokuapp.com/)
 * Front-end [Vercel](https://provi-hack.vercel.app/)
 
@@ -100,12 +100,13 @@ No desenvolvimento do projeto, utilizamos as seguintes tecnologias e ferramentas
 
  * Eliezer Perez - **Desenvolvedor Full Stack**
 
-<a href="https://github.com/eliezerlobaton" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"> <a href="https://www.linkedin.com/in/eliezerprogramadorfullstack/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+<a href="https://github.com/eliezerlobaton" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"> 
+<a href="https://www.linkedin.com/in/eliezerprogramadorfullstack/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
 
  * Gabriel Silva - **Desenvolvedor Back-end**
   
 <a href="https://github.com/gbr-mendes" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"> 
-<a href="linkedin" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+<a href="https://www.linkedin.com/in/gabriel-mendes-da-silva/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
 
  * Alexssandra Pimentel - **Desenvolvedora Back-end**
   
@@ -115,7 +116,7 @@ No desenvolvimento do projeto, utilizamos as seguintes tecnologias e ferramentas
  * Luciano Ferreira - **Desenvolvedor Front-end**
 
 <a href="https://github.com/Ferreira94" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"> 
-<a href="linkedin" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+<a href="https://www.linkedin.com/in/luciano-ferreira-b302b61a7/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
   
  * Ana Terra - **Desenvolvedora Front-end**
  
@@ -124,7 +125,7 @@ No desenvolvimento do projeto, utilizamos as seguintes tecnologias e ferramentas
 
  * Bianca Medrado - **Product Owner**
 
-<a href="linkedin" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+<a href="https://www.linkedin.com/in/biancamedrado" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
  
  * Audrey Doanne - **Ux Designer**
 
