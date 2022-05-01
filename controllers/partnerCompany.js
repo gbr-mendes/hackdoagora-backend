@@ -2,10 +2,10 @@ const controller = {}
 const PartnerCompanyModel = require("../models/PartnerCompany")
 const CouponModel = require("../models/Coupon")
 const companyValidator = require("../validators/company")
+const cloudinary = require("../utils/cloudinary")
 
 controller.createPartnerCompany = async (req, resp) => {
   const { name, cnpj, coupons } = req.body
-  
   const { error } = companyValidator.registerValidation({ name, cnpj, coupons })
   if (error) {
     const errorMessage = { error: error.details[0].message }
@@ -19,23 +19,37 @@ controller.createPartnerCompany = async (req, resp) => {
     return
   }
 
-  const couponsIds = await Promise.all(coupons.map(async (coupon)=>{
-    const {_id} = await CouponModel.create(coupon)
+  const couponsIds = await Promise.all(coupons.map(async (coupon) => {
+    const { _id } = await CouponModel.create(coupon)
     return _id
   }))
-  
-  const data = { name, cnpj, coupons: couponsIds }  
 
   try {
-    const PartnerCompany = await PartnerCompanyModel.create(data)
+    const PartnerCompany = await PartnerCompanyModel.create({ name, cnpj, coupons: couponsIds })
     if (PartnerCompany) {
-      resp.status(201).json({ success: "Empresa parceira criada com sucesso!" })
+      if (req.file) {
+        try {
+          const image = {}
+          const path = req.file.path
+          if (path) {
+            const { secure_url } = await cloudinary.uploader.upload(path)
+            image.url = secure_url
+          }
+          await PartnerCompanyModel.findOneAndUpdate({ cnpj }, {image:image.url}, { new: false })
+          resp.status(201).json({ success: "Empresa parceira criada com sucesso!" })
+        } catch (err) {
+          console.log(err)
+          await PartnerCompanyModel.findOneAndDelete({ cnpj }, {image:image.url}, { new: false })
+          resp.status(500).json({ error: "Ocorreu um erro inesperado ao inserir a imagem da empresa" })
+        }
+      }else{
+        resp.status(201).json({ success: "Empresa parceira criada com sucesso!" })
+      }
     }
   } catch (err) {
     console.log(err)
     resp.status(500).json({ error: "Ocorreu um erro inesperado" })
   }
-
 }
 
 controller.showPartnerCompany = async (req, resp) => {
@@ -45,8 +59,8 @@ controller.showPartnerCompany = async (req, resp) => {
     if (partnerCompany) {
       resp.status(200).json(partnerCompany)
       return
-    }else{
-      resp.status(400).json({error: "Empresa não encontrada"})
+    } else {
+      resp.status(400).json({ error: "Empresa não encontrada" })
       return
     }
   } catch (err) {
@@ -79,20 +93,20 @@ controller.updatePartnerCompany = async (req, resp) => {
   }
   const data = { name, cnpj }
 
-  if(coupons){
-    const couponsIds = await Promise.all(coupons.map(async (coupon)=>{
-      const {_id} = await CouponModel.create(coupon)
+  if (coupons) {
+    const couponsIds = await Promise.all(coupons.map(async (coupon) => {
+      const { _id } = await CouponModel.create(coupon)
       return _id
     }))
-    data.coupons=couponsIds
+    data.coupons = couponsIds
   }
 
   try {
     const partnerCompany = await PartnerCompanyModel.findByIdAndUpdate(id, data, { new: false })
     if (partnerCompany) {
-      resp.status(200).json({success: "Empresa atualizada com sucesso"})
-    }else{
-      resp.status(400).json({error: 'Empresa não encontrada'})
+      resp.status(200).json({ success: "Empresa atualizada com sucesso" })
+    } else {
+      resp.status(400).json({ error: 'Empresa não encontrada' })
     }
   } catch (err) {
     console.log(err)
@@ -107,8 +121,8 @@ controller.deletePartnerCompany = async (req, resp) => {
     if (partnerCompany) {
       resp.status(200).json({ success: "Empresa parceira deletada com sucesso!" })
       return
-    }else{
-      resp.status(400).json({error: "Empresa não encontrada"})
+    } else {
+      resp.status(400).json({ error: "Empresa não encontrada" })
       return
     }
   } catch (err) {
