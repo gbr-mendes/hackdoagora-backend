@@ -9,10 +9,6 @@ const couponSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    percentage: {
-        type: Number,
-        required: true
-    },
 })
 
 module.exports = mongoose.model("Coupon", couponSchema)

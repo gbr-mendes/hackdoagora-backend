@@ -7,14 +7,16 @@ require('dotenv').config()
 // dependencies import
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const cloudinary = require("./utils/cloudinary")
-const upload = require("./utils/multer")
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
 
 // routes import
 const authRoutes = require("./routes/auth")
 const dumpRoutes = require("./routes/dump")
 const partnerCompaniesRoutes = require("./routes/partnerCompany")
 const extractRoutes = require("./routes/extract")
+const checkoutRoutes = require("./routes/checkout")
+const couponsRoutes = require("./routes/coupons")
 
 // general middlewares
 app.use(bodyParser.json())
@@ -26,10 +28,13 @@ app.get("/", (req, resp)=> { // route to test deploye
 })
 
 // Routes middleware
+app.use('/api/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 app.use("/api/auth", authRoutes)
 app.use("/api/system", dumpRoutes)
 app.use("/api/extract", extractRoutes)
 app.use("/api/companies", partnerCompaniesRoutes)
+app.use("/api/checkout", checkoutRoutes)
+app.use("/api/coupons", couponsRoutes)
 
 // Db connection
 const db = require("./models/db")
