@@ -5,6 +5,27 @@ const UserModel = require("../models/User")
 const checkoutValidator = require("../validators/checkout").checkoutValidation
 
 controller.checkout = async (req, resp) => {
+    // #swagger.tags = ['Checkout']
+    // #swagger.description = 'Endpoint para troca de pontos por cupons. É necessário estar autenticado'
+    /* #swagger.parameters['auth-token'] = {
+               in: 'header',
+               description: 'Token de autenticação',
+               required: true,
+               schema: {type: "string"}
+        } */
+    /*	#swagger.requestBody = {
+            required: true,
+            "@content": {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        $ref: "#/definitions/ordersObject"
+                        },
+                    }
+                }
+            } 
+        }
+    */
     const token = req.header('auth-token')
     const {email} = jwt.verify(token, process.env.TOKEN_SECRET)
     const {orders} = req.body

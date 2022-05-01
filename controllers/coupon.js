@@ -3,6 +3,8 @@ const CouponModel = require("../models/Coupon")
 const CompanyModel = require("../models/PartnerCompany")
 
 controller.listCoupons = async (req, resp) => {
+    // #swagger.tags = ['Coupon']
+    // #swagger.description = 'Endpoint para listar cupons. Nenhum privilégio administrativo é requerido'
     try{
         const coupons = await CouponModel.find()
         const queryset = Promise.all(

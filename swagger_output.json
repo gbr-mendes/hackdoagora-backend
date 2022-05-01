@@ -1,0 +1,622 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API- Troca Inteligente",
+    "description": "Essa documentação descreve todas a rotas implementadas para o projeto Troca Inteligente, desenvolvido para o evento Provi HackDoAgora"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    },
+    {
+      "url": "https://localhost:3000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Enpoints para login, registro, informações da conta e ataulização de usuários."
+    },
+    {
+      "name": "Partners",
+      "description": "Endpoints para criação, atualização, deleção e recuperação de informações de empresas parceiras"
+    },
+    {
+      "name": "Coupon",
+      "description": "Endpoint para listagem de cupons"
+    },
+    {
+      "name": "Dump",
+      "description": "Enpoints para criação listagem e filtragem de lixeiras inteligentes"
+    },
+    {
+      "name": "Checkout",
+      "description": "Enpoint para realização de troca de pontos por cupons"
+    },
+    {
+      "name": "Extract",
+      "description": "Enpoint para vizualização de extrato"
+    }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Endpoint para registrar usuário. Para setar isAdmin como true, é necessário estar autenticado e ser um admin",
+        "parameters": [
+          {
+            "name": "auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "confirmPassword": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Endpoint para fazer login do usuário. O retorno é um JWT. O campo userCredential aceita tanto email, como CPF",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "credentialLogin": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/me": {
+      "patch": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Endpoint para atualizar um usuário. Através de formdata também é possível incluir a foto de perfil do usuário",
+        "parameters": [
+          {
+            "name": "auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "file"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Endpoint para obter as informações usuário. Requer autenticação",
+        "parameters": [
+          {
+            "name": "auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/system/dump": {
+      "post": {
+        "tags": [
+          "Dump"
+        ],
+        "description": "Endpoint para criação de lixeiras inteligentes. É necessário estar logado e se um usuário admin. O campo região só aceita os valores Norte, Sul, Leste, Oeste e Centro",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "region": {
+                    "type": "string",
+                    "@enum": [
+                      "Norte",
+                      "Sul",
+                      "Leste",
+                      "Oeste",
+                      "Centro"
+                    ]
+                  },
+                  "openingHours": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "zipcode": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Dump"
+        ],
+        "description": "Endpoint para listagem de lixeiras inteligentes. Nenhum privilégio administrativo é requerido",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/system/dump/{cep}": {
+      "get": {
+        "tags": [
+          "Dump"
+        ],
+        "description": "Endpoint para a filtragem de lixeiras por cep. Nenhum privilégio administrativo é requerido",
+        "parameters": [
+          {
+            "name": "cep",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "CEP de localização de lixeira"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/extract/": {
+      "get": {
+        "tags": [
+          "Extract"
+        ],
+        "description": "Endpoint para recuperação de descartes realizados pelo usuário. Requer autenticação",
+        "parameters": [
+          {
+            "name": "auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/companies/{id}": {
+      "delete": {
+        "tags": [
+          "Partners"
+        ],
+        "description": "Endpoint para deletar uma empresa parceira. É necessário estar autenticado e ser um usuário admin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Partners"
+        ],
+        "description": "Endpoint para atualizar empresa parceira. É necessário estar autenticado e ser um usuário admin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cnpj": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Partners"
+        ],
+        "description": "Endpoint para obter as informações de empresa parceira. Nenhum privilégio administrativo é requerido",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/companies/register": {
+      "post": {
+        "tags": [
+          "Partners"
+        ],
+        "description": "Endpoint para criação de empresas parceiras. É necessário estar autenticado e ser um usuário admin",
+        "parameters": [
+          {
+            "name": "auth-token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "cnpj": {
+                    "type": "string"
+                  },
+                  "coupons": {
+                    "type": "array"
+                  },
+                  "image": {
+                    "type": "file"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/companies/": {
+      "get": {
+        "tags": [
+          "Partners"
+        ],
+        "description": "Endpoint para listar todas as empresas parceiras. Nenum privilégio administrativo é requerido",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/checkout/": {
+      "post": {
+        "tags": [
+          "Checkout"
+        ],
+        "description": "Endpoint para troca de pontos por cupons. É necessário estar autenticado",
+        "parameters": [
+          {
+            "name": "auth-token",
+            "in": "header",
+            "description": "Token de autenticação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/ordersObject"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coupons/": {
+      "get": {
+        "tags": [
+          "Coupon"
+        ],
+        "description": "Endpoint para listar cupons. Nenhum privilégio administrativo é requerido",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ordersObject": {
+        "type": "object",
+        "properties": {
+          "orders": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "coupon": {
+                  "type": "string",
+                  "example": "Id do cupom"
+                },
+                "quantity": {
+                  "type": "number",
+                  "example": 2
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

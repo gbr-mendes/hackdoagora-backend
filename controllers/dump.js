@@ -8,6 +8,40 @@ const CapacityModel = require("../models/Capacity")
 const ordererDumpHelper = require("../utils/hellperFunctions").orderDumpsByRegion
 
 controller.createDump = async (req, resp) => {
+    // #swagger.tags = ['Dump']
+    // #swagger.description = 'Endpoint para criação de lixeiras inteligentes. É necessário estar logado e se um usuário admin. O campo região só aceita os valores Norte, Sul, Leste, Oeste e Centro'
+     /*	#swagger.requestBody = {
+            required: true,
+            "@content": {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string"
+                            },
+                            region: {
+                                type: "string",
+                                '@enum': ["Norte", "Sul", "Leste", "Oeste", "Centro"]
+                            },
+                            openingHours: {
+                                type: "string"
+                            },
+                            address: {
+                                type: "object",
+                                properties: {
+                                    street:{type: "string"},
+                                    state:{type: "string"},
+                                    city:{type: "string"},
+                                    zipcode:{type: "string"},
+                                }
+                            }
+                        },
+                    }
+                }
+            } 
+        }
+    */
     const {address} = req.body
     const {name, openingHours, region} = req.body
 
@@ -59,6 +93,8 @@ controller.createDump = async (req, resp) => {
 }
 
 controller.retriveDumps = async (req, resp) => {
+    // #swagger.tags = ['Dump']
+    // #swagger.description = 'Endpoint para listagem de lixeiras inteligentes. Nenhum privilégio administrativo é requerido'
     const dumps = await DumpModel.find()
     const queryset = await Promise.all(
         dumps.map(async dump => {
@@ -71,6 +107,9 @@ controller.retriveDumps = async (req, resp) => {
 }
 
 controller.filterByCep = async (req, resp) => {
+    // #swagger.tags = ['Dump']
+    // #swagger.description = 'Endpoint para a filtragem de lixeiras por cep. Nenhum privilégio administrativo é requerido'
+    // #swagger.parameters['cep'] = { description: 'CEP de localização de lixeira' }
     const zipcode = req.params.cep
     const addresses = await AddresModel.find({zipcode})
     const queryset = await Promise.all(
@@ -80,8 +119,7 @@ controller.filterByCep = async (req, resp) => {
             return {name, region, openingHours, address: addressInfo}
         })
     )
-    
-    resp.json(queryset)
+    resp.status(200).json(queryset)
 }
 
 module.exports = controller

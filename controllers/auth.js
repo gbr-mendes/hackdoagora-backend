@@ -9,6 +9,36 @@ const cloudinary = require("../utils/cloudinary")
 
 
 controller.createUser = async (req, resp) =>{
+    // #swagger.tags = ['Auth']
+    // #swagger.description = 'Endpoint para registrar usuário. Para setar isAdmin como true, é necessário estar autenticado e ser um admin'
+    /*	#swagger.requestBody = {
+            required: true,
+            "@content": {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string"
+                            },
+                            email: {
+                                type: "string"
+                            },
+                            cpf: {
+                                type: "string"
+                            },
+                            password: {
+                                type: "string"
+                            },
+                            confirmPassword: {
+                                type: "string"
+                            },
+                        },
+                    }
+                }
+            } 
+        }
+    */
     const {name, email, cpf, password, confirmPassword} = req.body
     const data = {name, email, cpf, password, confirmPassword}
     const {error} = authValidator.registerValidation(data)
@@ -48,6 +78,27 @@ controller.createUser = async (req, resp) =>{
 }
 
 controller.loginUser = async (req, resp) => {
+    // #swagger.tags = ['Auth']
+    // #swagger.description = 'Endpoint para fazer login do usuário. O retorno é um JWT. O campo userCredential aceita tanto email, como CPF'
+    /*	#swagger.requestBody = {
+            required: true,
+            "@content": {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            credentialLogin: {
+                                type: "string"
+                            },
+                            password: {
+                                type: "string"
+                            }
+                        },
+                    }
+                }
+            } 
+        }
+    */
     const {credentialLogin, password} = req.body
     const data = {credentialLogin, password}
     
@@ -75,6 +126,30 @@ controller.loginUser = async (req, resp) => {
 }
 
 controller.updateUser = async (req, resp) => {
+    // #swagger.tags = ['Auth']
+    // #swagger.description = 'Endpoint para atualizar um usuário. Através de formdata também é possível incluir a foto de perfil do usuário'
+    /*	#swagger.requestBody = {
+            required: true,
+            "@content": {
+                "multipart/form-data": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string"
+                            },
+                            email: {
+                                type: "string"
+                            },
+                            image: {
+                                type: "file",
+                            }
+                        },
+                    }
+                }
+            } 
+        }
+    */
     const {error} = authValidator.updateUserValidator(req.body)
     if(error){
         const errorMessage = {error: error.details[0].message}
@@ -113,6 +188,9 @@ controller.updateUser = async (req, resp) => {
 }
 
 controller.userProfile = async (req, resp) => {
+    // #swagger.tags = ['Auth']
+    // #swagger.description = 'Endpoint para obter as informações usuário. Requer autenticação'
+
     const token = req.header("auth-token")
     const {name, email, cpf, profileImage, score, amountDescatarded} = jwt.verify(token, process.env.TOKEN_SECRET)
 

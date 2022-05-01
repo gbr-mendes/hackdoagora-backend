@@ -5,8 +5,43 @@ const companyValidator = require("../validators/company")
 const cloudinary = require("../utils/cloudinary")
 
 controller.createPartnerCompany = async (req, resp) => {
+  // #swagger.tags = ['Partners']
+  // #swagger.description = 'Endpoint para criação de empresas parceiras. É necessário estar autenticado e ser um usuário admin'
+  /*	#swagger.requestBody = {
+            required: true,
+            "@content": {
+                "multipart/form-data": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string"
+                            },
+                            cnpj: {
+                                type: "string"
+                            },
+                            coupons:{
+                              type: "array",
+                            },
+                            image: {
+                                type: "file",
+                            }
+                        },
+                    }
+                }
+            } 
+        }
+    */
   const { name, cnpj, coupons } = req.body
-  const { error } = companyValidator.registerValidation({ name, cnpj, coupons })
+    
+  couponsArray = coupons.split('/') //This line and this line and the next six was added for test propouse on swagger
+  couponsArray = couponsArray.map((coupon, index, array) => {
+    if(coupon.charAt(0) == ','){
+      coupon = coupon.replace(',','')
+    }
+    return JSON.parse(coupon)
+  })
+  const { error } = companyValidator.registerValidation({ name, cnpj, coupons: couponsArray })
   if (error) {
     const errorMessage = { error: error.details[0].message }
     resp.status(400).json(errorMessage)
@@ -19,7 +54,7 @@ controller.createPartnerCompany = async (req, resp) => {
     return
   }
 
-  const couponsIds = await Promise.all(coupons.map(async (coupon) => {
+  const couponsIds = await Promise.all(couponsArray.map(async (coupon) => {
     const { _id } = await CouponModel.create(coupon)
     return _id
   }))
@@ -53,6 +88,8 @@ controller.createPartnerCompany = async (req, resp) => {
 }
 
 controller.showPartnerCompany = async (req, resp) => {
+  // #swagger.tags = ['Partners']
+  // #swagger.description = 'Endpoint para obter as informações de empresa parceira. Nenhum privilégio administrativo é requerido'
   const { id } = req.params
   try {
     const partnerCompany = await PartnerCompanyModel.findById(id).select(['_id', 'name', 'cnpj', 'coupons'])
@@ -70,6 +107,8 @@ controller.showPartnerCompany = async (req, resp) => {
 }
 
 controller.listPartnerCompanies = async (req, resp) => {
+  // #swagger.tags = ['Partners']
+  // #swagger.description = 'Endpoint para listar todas as empresas parceiras. Nenum privilégio administrativo é requerido'
   try {
     const partnerCompanies = await PartnerCompanyModel.find().select(['_id', 'name', 'cnpj'])
     if (partnerCompanies) {
@@ -82,6 +121,28 @@ controller.listPartnerCompanies = async (req, resp) => {
 }
 
 controller.updatePartnerCompany = async (req, resp) => {
+  // #swagger.tags = ['Partners']
+  // #swagger.description = 'Endpoint para atualizar empresa parceira. É necessário estar autenticado e ser um usuário admin'
+  /*	#swagger.requestBody = {
+            required: true,
+            "@content": {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string"
+                            },
+                            cnpj: {
+                                type: "string"
+                            },
+                        },
+                    }
+                }
+            } 
+        }
+    */
+  
   const { id } = req.params
   const { name, cnpj, coupons } = req.body
 
@@ -115,6 +176,8 @@ controller.updatePartnerCompany = async (req, resp) => {
 }
 
 controller.deletePartnerCompany = async (req, resp) => {
+  // #swagger.tags = ['Partners']
+  // #swagger.description = 'Endpoint para deletar uma empresa parceira. É necessário estar autenticado e ser um usuário admin'
   const { id } = req.params
   try {
     const partnerCompany = await PartnerCompanyModel.findByIdAndDelete(id)
