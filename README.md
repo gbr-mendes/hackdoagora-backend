@@ -40,7 +40,7 @@
 
 ### Deploy da aplicação
 * Back-end [Heroku](https://hackdoagora-backend.herokuapp.com/)
-* Front-end [Vercel](https://provi-hack.vercel.app/)
+* Front-end [Vercel](https://troca-inteligente.vercel.app/)
 
 ---
 ## Sobre o projeto
