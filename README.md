@@ -118,7 +118,7 @@ No desenvolvimento do projeto, utilizamos as seguintes tecnologias e ferramentas
 ## Vídeos de apresentação
 
 * [Pitch]()
-* [Tela](https://www.loom.com/share/5964f7aeb36b4128924347060fff8631)
+* [Demo](https://www.loom.com/share/5964f7aeb36b4128924347060fff8631)
 
 ---
 
