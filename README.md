@@ -45,7 +45,7 @@
 ---
 ## Sobre o projeto
 
-
+A Troca Inteligente, trata-se de uma lixeira que gerencia os resíduos pós consumo e garante benefícios em pontos para que você descarte os resíduos corretamente.
 
 ---
 
