@@ -64,14 +64,40 @@
 - Quando terminar a instalação, abra o terminal do seu computador e digite os comandos abaixos:
 
 ```bash
-npm install
-```
-```bash
 node -v
 ```
 ```bash
 npm -v
 ```
+- Se ambos os comandos acima imprimirem as versões do node e npm respectivamente, você esta pronto para seguir
+- Entre na pasta no diretório que você clonou e execulte o comando abaixo.
+
+```bash
+npm install
+```
+- Crie um arquivo .env na raiz do projeto e inclua as seguintes informações:
+  
+  - CLOUDINARY_NAME=string
+  - CLOUDINARY_API_KEY=string
+  - CLOUDINARY_API_SECRET=string
+  - TOKEN_SECRET=string Necessário para geração de jwt
+  - HOST=localhost:3000
+
+- Faça cadastro na [cloudinary](https://cloudinary.com/) para obter as informações acima
+- Você também pode incluir a seguinte variável de ambiente para usar uma base de dados na nuvem como no [atlas](https://www.mongodb.com/atlas/database), caso contrário precisará ter o [mongodb](https://www.mongodb.com/pt-br) instalado na sua máquina:
+  - DB_URI=string
+  
+- Com isso setado, execute os comandos abaixo:
+```bash
+npm run swagger auto-gen
+```
+```bash
+npm run devStart
+```
+- Acesse a [url](http://localhost:3000) e veja a documentação da api
+
+- ATENÇÃO. Para a api funcionar localmente, é necessário que você tenha ao menos um Reciclável e uma lixeira cadastrados no banco de dados. A rota de criação da lixeira é reservada a usuários admin, mas foi liberada para propósitos de teste.Você pode fazer a adição pelo swagger.Após a adição dos items divirta-se
+
 
 ---
 
@@ -80,8 +106,9 @@ npm -v
 No desenvolvimento do projeto, utilizamos as seguintes tecnologias e ferramentas: 
 
 * Desenvolvimento Front-End: HTML, CSS, Nextjs, ChakraUI;
-* Desenvolvimento Back-End: Nodejs;
+* Desenvolvimento Back-End: Nodejs e Express;
 * Banco de dados: MongoDB;
+* Gerenciamento de Media: Cloudinary
 * Ux Design: Figma;
 
 ---
