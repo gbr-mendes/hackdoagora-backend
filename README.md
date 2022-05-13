@@ -144,11 +144,6 @@ No desenvolvimento do projeto, utilizamos as seguintes tecnologias e ferramentas
 
 <a href="https://github.com/Ferreira94" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"> 
 <a href="https://www.linkedin.com/in/luciano-ferreira-b302b61a7/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
-  
- * Ana Terra - **Desenvolvedora Front-end**
- 
-<a href="https://github.com/atmirala" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"> 
-<a href="https://www.linkedin.com/in/ana-terra-maraschin-irala/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
 
  * Bianca Medrado - **Product Owner**
 
